@@ -4,21 +4,27 @@ import { FcGoogle } from "react-icons/fc";
 import jwt_decode from "jwt-decode";
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
+import { client } from "../client";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const responseGoogle = (response) => {
     const userObj = jwt_decode(response.credential);
     localStorage.setItem("user", JSON.stringify(userObj));
-
-    const { name, googleId, imageUrl } = userObj;
+    console.log(userObj);
+    const { name, sub, picture } = userObj;
     const doc = {
-      _id: googleId,
+      _id: sub,
       _type: "user",
       userName: name,
-      image: imageUrl,
+      image: picture,
     };
-  };
 
+    client.createIfNotExists(doc).then(() => {
+      navigate("/", { replace: true });
+    });
+  };
   return (
     <>
       <div className="flex justify-start items-center flex-col h-screen">
