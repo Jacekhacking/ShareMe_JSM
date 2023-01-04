@@ -1,14 +1,16 @@
-import GoogleLogin from "react-google-login";
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
+import jwt_decode from "jwt-decode";
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
 
 const Login = () => {
   const responseGoogle = (response) => {
-    localStorage.setItem("user", JSON.stringify(response.profileObj));
+    const userObj = jwt_decode(response.credential);
+    localStorage.setItem("user", JSON.stringify(userObj));
 
-    const { name, googleId, imageUrl } = response.profileObj;
+    const { name, googleId, imageUrl } = userObj;
     const doc = {
       _id: googleId,
       _type: "user",
@@ -37,7 +39,6 @@ const Login = () => {
           </div>
           <div className="shadow-2xl">
             <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
               render={(renderProps) => (
                 <button
                   type="button"
@@ -50,7 +51,7 @@ const Login = () => {
               )}
               onSuccess={responseGoogle}
               onFailure={responseGoogle}
-              // cookiePolicy="single-host_origin"
+              cookiePolicy="single_host_origin"
             />
           </div>
         </div>
