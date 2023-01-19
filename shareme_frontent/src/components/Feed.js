@@ -9,9 +9,7 @@ import Spinner from "./Spinner";
 
 const Feed = () => {
   const [loading, setLoading] = useState(false);
-
   const [pins, setPins] = useState(null);
-
   const { categoryId } = useParams();
 
   useEffect(() => {
@@ -23,6 +21,7 @@ const Feed = () => {
         setLoading(false);
       });
     } else {
+      setLoading(true);
       client.fetch(feedQuery).then((data) => {
         setPins(data);
         setLoading(false);
