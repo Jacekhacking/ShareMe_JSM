@@ -25,6 +25,7 @@ const Login = () => {
       navigate("/", { replace: true });
     });
   };
+
   return (
     <>
       <div className="flex justify-start items-center flex-col h-screen">

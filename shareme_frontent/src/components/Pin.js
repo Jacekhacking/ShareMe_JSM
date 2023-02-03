@@ -17,6 +17,8 @@ const Pin = ({ pin }) => {
 
   const user = fetchUser();
 
+  // !! evaluates to true for non 0 numbers and false for 0.
+  //Not the cleanest way to write it but interesting non the less
   const alreadySaved = !!save?.filter(
     (item) => item?.postedBy?._id === user.sub
   )?.length;
