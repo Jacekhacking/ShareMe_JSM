@@ -24,11 +24,12 @@ const Home = () => {
     // });
     setUser(userInfo);
   }, []);
-  console.log(user);
 
   useEffect(() => {
     scrollRef.current.scrollTo(0, 0);
   }, []);
+
+  console.log(user);
 
   return (
     <div className="flex bg-gray-50 md:flex-row flex-col h-screen transaction-height duration-75 ease-out ">
